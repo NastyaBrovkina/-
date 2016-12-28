@@ -1,0 +1,53 @@
+﻿@model MvcApplication1.Models.Korzina
+
+@{
+    ViewBag.Title = "Buy";
+}
+
+<h2>Buy</h2>
+
+<fieldset>
+    <legend>Tovar</legend>
+
+    <div class="display-label">
+         Артикул
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idTovara)
+    </div>
+
+    <div class="display-label">
+        Наименование
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sklad.nazvanie)
+    </div>
+
+    <div class="display-label">
+         Производитель
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Tovar.proizvoditel)
+    </div>
+
+    <div class="display-label">
+         Цена
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Price)
+    </div>
+
+    <div class="display-label">
+         Описание
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Tovar.opisanie)
+    </div>
+</fieldset>
+<p>
+   
+    @Html.ActionLink("Вернуться к корзине", "Index")
+</p>
+<p>
+    @Html.ActionLink("Оформить заказ", "Create", "Oplata")
+</p>

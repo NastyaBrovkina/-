@@ -1,0 +1,47 @@
+﻿@model MvcApplication1.Models.Tovar
+
+@{
+    ViewBag.Title = "Buy";
+}
+
+<h2>Buy</h2>
+
+<fieldset>
+    <legend>Tovar</legend>
+
+    <div class="display-label">
+         Артикул
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idTovara)
+    </div>
+
+    <div class="display-label">
+         Производитель
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.proizvoditel)
+    </div>
+
+    <div class="display-label">
+         Цена
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.price)
+    </div>
+
+    <div class="display-label">
+         Описание
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.opisanie)
+    </div>
+</fieldset>
+<p>
+    
+    @Html.ActionLink("Вернуться к каталогу товаров", "Index")
+    
+</p>
+<p>
+    @Html.ActionLink("Оформить заказ", "Create", "Oplata")
+</p>

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MvcApplication1.Models.Tovar>
+@{
+    ViewBag.Title = "Каталог товаров";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                
+            </hgroup>
+            
+        </div>
+    </section>
+}
+@using (Html.BeginForm())
+{
+    <p>
+        Поиск : @Html.TextBox("SearchString")
+        <input type="submit" value="Поиск" />
+    </p>
+}
+<table class="table" >
+    
+        <tr>
+            <th>
+                Артикул
+            </th>
+               <th></th>
+            <th>
+                Наименование
+            </th>
+            <th></th>
+            <th>
+                Производитель
+            </th>
+            <th></th>
+            <th>
+                Цена
+            </th>
+
+        </tr>
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>  
+                @Html.DisplayFor(modelItem => item.idTovara)                             
+            </td>
+            <td></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sklad.nazvanie)
+            </td>
+            <td></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.proizvoditel)
+            </td>
+            <td></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td></td>
+
+            <td>
+                @if (User.IsInRole("admin")) {
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.id }) }
+                @Html.ActionLink("Подробнее", "Details", new { id = item.id }) 
+               @if (User.IsInRole("admin")) {
+                 @Html.ActionLink("Удалить", "Delete", new { id = item.id }) }
+                 @if (User.IsInRole("klient")) {
+                @Html.ActionLink("Купить", "Buy", new { id = item.id })
+                 }
+                 @if (User.IsInRole("klient"))
+                 {
+                    @Html.ActionLink("Добавить в корзину", "AddKorz", new { id = item.id })
+                 }
+            </td>
+        </tr>
+    }
+   
+
+</table>
+<p>
+@if (User.IsInRole("admin")) {
+    @Html.ActionLink("Добавить товар", "Create")
+}
+</p>

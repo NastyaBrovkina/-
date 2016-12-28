@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище ComputersModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="IdClient" />
+    </Key>
+    <Property Name="IdClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SurName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="E-mail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telefone" Type="int" />
+  </EntityType>
+  <EntityType Name="ListSale">
+    <Key>
+      <PropertyRef Name="IdSale" />
+    </Key>
+    <Property Name="IdSale" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="datatime" Type="datetime" Nullable="false" />
+    <Property Name="idTovara" Type="int" Nullable="false" />
+    <Property Name="idClient" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="Summa" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="data" Type="datetime" Nullable="false" />
+    <Property Name="sum" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Sender" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="OperationId" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="WithdrawAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sklad">
+    <Key>
+      <PropertyRef Name="idSklad" />
+    </Key>
+    <Property Name="idTovara" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="idSklad" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tovar">
+    <Key>
+      <PropertyRef Name="idTovara" />
+    </Key>
+    <Property Name="idTovara" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nazvanie" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="proizvoditel" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="price" Type="money" Nullable="false" />
+    <Property Name="opisanie" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="pass" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="role" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="idUser" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="idClient">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="ListSale" Type="Self.ListSale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="IdClient" />
+      </Principal>
+      <Dependent Role="ListSale">
+        <PropertyRef Name="idClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="idTov">
+    <End Role="Tovar" Type="Self.Tovar" Multiplicity="1" />
+    <End Role="ListSale" Type="Self.ListSale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tovar">
+        <PropertyRef Name="idTovara" />
+      </Principal>
+      <Dependent Role="ListSale">
+        <PropertyRef Name="idTovara" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="idTovara">
+    <End Role="Tovar" Type="Self.Tovar" Multiplicity="1" />
+    <End Role="Sklad" Type="Self.Sklad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tovar">
+        <PropertyRef Name="idTovara" />
+      </Principal>
+      <Dependent Role="Sklad">
+        <PropertyRef Name="idTovara" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище ComputersModelContainer">
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ListSale" EntityType="Self.ListSale" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sklad" EntityType="Self.Sklad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tovar" EntityType="Self.Tovar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="idClient" Association="Self.idClient">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="ListSale" EntitySet="ListSale" />
+    </AssociationSet>
+    <AssociationSet Name="idTov" Association="Self.idTov">
+      <End Role="Tovar" EntitySet="Tovar" />
+      <End Role="ListSale" EntitySet="ListSale" />
+    </AssociationSet>
+    <AssociationSet Name="idTovara" Association="Self.idTovara">
+      <End Role="Tovar" EntitySet="Tovar" />
+      <End Role="Sklad" EntitySet="Sklad" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

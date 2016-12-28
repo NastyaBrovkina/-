@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище ComputersModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SurName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="E-mail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefone" Type="int" />
+        </EntityType>
+        <EntityType Name="Korzina">
+          <Key>
+            <PropertyRef Name="IdKorz" />
+          </Key>
+          <Property Name="IdKorz" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idTovara" Type="int" />
+          <Property Name="nazvT" Type="nvarchar" MaxLength="100" />
+          <Property Name="Price" Type="money" />
+          <Property Name="opisanieT" Type="nvarchar(max)" />
+          <Property Name="id" Type="int" />
+        </EntityType>
+        <EntityType Name="ListSale">
+          <Key>
+            <PropertyRef Name="IdSale" />
+          </Key>
+          <Property Name="IdSale" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="datatime" Type="datetime" Nullable="false" />
+          <Property Name="idTovara" Type="int" Nullable="false" />
+          <Property Name="idClient" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Summa" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Oplata">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Schet" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="data" Type="datetime" Nullable="false" />
+          <Property Name="sum" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Sender" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OperationId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="WithdrawAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sklad">
+          <Key>
+            <PropertyRef Name="idTovara" />
+          </Key>
+          <Property Name="idTovara" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazvanie" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tovar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="idTovara" Type="int" Nullable="false" />
+          <Property Name="proizvoditel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
+          <Property Name="opisanie" Type="nvarchar(max)" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pass" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="idUser" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Korzina_ToTable">
+          <End Role="Tovar" Type="Self.Tovar" Multiplicity="0..1" />
+          <End Role="Korzina" Type="Self.Korzina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tovar">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Korzina">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idClient">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ListSale" Type="Self.ListSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="ListSale">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idT">
+          <End Role="Sklad" Type="Self.Sklad" Multiplicity="1" />
+          <End Role="Tovar" Type="Self.Tovar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sklad">
+              <PropertyRef Name="idTovara" />
+            </Principal>
+            <Dependent Role="Tovar">
+              <PropertyRef Name="idTovara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idTov">
+          <End Role="Sklad" Type="Self.Sklad" Multiplicity="1" />
+          <End Role="ListSale" Type="Self.ListSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sklad">
+              <PropertyRef Name="idTovara" />
+            </Principal>
+            <Dependent Role="ListSale">
+              <PropertyRef Name="idTovara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idTovar">
+          <End Role="Sklad" Type="Self.Sklad" Multiplicity="0..1" />
+          <End Role="Korzina" Type="Self.Korzina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sklad">
+              <PropertyRef Name="idTovara" />
+            </Principal>
+            <Dependent Role="Korzina">
+              <PropertyRef Name="idTovara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ComputersModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Korzina" EntityType="Self.Korzina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListSale" EntityType="Self.ListSale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Oplata" EntityType="Self.Oplata" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sklad" EntityType="Self.Sklad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tovar" EntityType="Self.Tovar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Korzina_ToTable" Association="Self.FK_Korzina_ToTable">
+            <End Role="Tovar" EntitySet="Tovar" />
+            <End Role="Korzina" EntitySet="Korzina" />
+          </AssociationSet>
+          <AssociationSet Name="idClient" Association="Self.idClient">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ListSale" EntitySet="ListSale" />
+          </AssociationSet>
+          <AssociationSet Name="idT" Association="Self.idT">
+            <End Role="Sklad" EntitySet="Sklad" />
+            <End Role="Tovar" EntitySet="Tovar" />
+          </AssociationSet>
+          <AssociationSet Name="idTov" Association="Self.idTov">
+            <End Role="Sklad" EntitySet="Sklad" />
+            <End Role="ListSale" EntitySet="ListSale" />
+          </AssociationSet>
+          <AssociationSet Name="idTovar" Association="Self.idTovar">
+            <End Role="Sklad" EntitySet="Sklad" />
+            <End Role="Korzina" EntitySet="Korzina" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ComputersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SurName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="E_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefone" Type="Int32" />
+          <NavigationProperty Name="ListSales" Relationship="Self.idClient" FromRole="Client" ToRole="ListSale" />
+        </EntityType>
+        <EntityType Name="ListSale">
+          <Key>
+            <PropertyRef Name="IdSale" />
+          </Key>
+          <Property Name="IdSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datatime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idTovara" Type="Int32" Nullable="false" />
+          <Property Name="idClient" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Summa" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.idClient" FromRole="ListSale" ToRole="Client" />
+          <NavigationProperty Name="Sklad" Relationship="Self.idTov" FromRole="ListSale" ToRole="Sklad" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sum" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Sender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OperationId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="WithdrawAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sklad">
+          <Key>
+            <PropertyRef Name="idTovara" />
+          </Key>
+          <Property Name="idTovara" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazvanie" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ListSales" Relationship="Self.idTov" FromRole="Sklad" ToRole="ListSale" />
+          <NavigationProperty Name="Tovars" Relationship="Self.idT" FromRole="Sklad" ToRole="Tovar" />
+          <NavigationProperty Name="Korzinas" Relationship="ComputersModel.idTovar" FromRole="Sklad" ToRole="Korzina" />
+        </EntityType>
+        <EntityType Name="Tovar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="idTovara" Type="Int32" Nullable="false" />
+          <Property Name="proizvoditel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="opisanie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Sklad" Relationship="Self.idT" FromRole="Tovar" ToRole="Sklad" />
+          <NavigationProperty Name="Korzinas" Relationship="ComputersModel.FK_Korzina_ToTable" FromRole="Tovar" ToRole="Korzina" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idUser" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="idClient">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ListSale" Type="Self.ListSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="ListSale">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idTov">
+          <End Role="Sklad" Type="Self.Sklad" Multiplicity="1" />
+          <End Role="ListSale" Type="Self.ListSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sklad">
+              <PropertyRef Name="idTovara" />
+            </Principal>
+            <Dependent Role="ListSale">
+              <PropertyRef Name="idTovara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idT">
+          <End Role="Sklad" Type="Self.Sklad" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tovar" Type="Self.Tovar" Multiplicity="*" >
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="Sklad">
+              <PropertyRef Name="idTovara" />
+            </Principal>
+            <Dependent Role="Tovar">
+              <PropertyRef Name="idTovara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ComputersEntities5" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="ListSales" EntityType="Self.ListSale" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Sklads" EntityType="Self.Sklad" />
+          <EntitySet Name="Tovars" EntityType="Self.Tovar" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="idClient" Association="Self.idClient">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="ListSale" EntitySet="ListSales" />
+          </AssociationSet>
+          <AssociationSet Name="idTov" Association="Self.idTov">
+            <End Role="Sklad" EntitySet="Sklads" />
+            <End Role="ListSale" EntitySet="ListSales" />
+          </AssociationSet>
+          <AssociationSet Name="idT" Association="Self.idT">
+            <End Role="Sklad" EntitySet="Sklads" />
+            <End Role="Tovar" EntitySet="Tovars" />
+          </AssociationSet>
+          <EntitySet Name="Oplatas" EntityType="ComputersModel.Oplata" />
+          <EntitySet Name="Korzinas" EntityType="ComputersModel.Korzina" />
+          <AssociationSet Name="FK_Korzina_ToTable" Association="ComputersModel.FK_Korzina_ToTable">
+            <End Role="Tovar" EntitySet="Tovars" />
+            <End Role="Korzina" EntitySet="Korzinas" />
+          </AssociationSet>
+          <AssociationSet Name="idTovar" Association="ComputersModel.idTovar">
+            <End Role="Sklad" EntitySet="Sklads" />
+            <End Role="Korzina" EntitySet="Korzinas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Oplata">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Schet" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Korzina">
+          <Key>
+            <PropertyRef Name="IdKorz" />
+          </Key>
+          <Property Name="IdKorz" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idTovara" Type="Int32" />
+          <Property Name="nazvT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="opisanieT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" />
+          <NavigationProperty Name="Tovar" Relationship="ComputersModel.FK_Korzina_ToTable" FromRole="Korzina" ToRole="Tovar" />
+          <NavigationProperty Name="Sklad" Relationship="ComputersModel.idTovar" FromRole="Korzina" ToRole="Sklad" />
+        </EntityType>
+        <Association Name="FK_Korzina_ToTable">
+          <End Type="ComputersModel.Tovar" Role="Tovar" Multiplicity="0..1" />
+          <End Type="ComputersModel.Korzina" Role="Korzina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tovar">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Korzina">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idTovar">
+          <End Type="ComputersModel.Sklad" Role="Sklad" Multiplicity="0..1" />
+          <End Type="ComputersModel.Korzina" Role="Korzina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sklad">
+              <PropertyRef Name="idTovara" />
+            </Principal>
+            <Dependent Role="Korzina">
+              <PropertyRef Name="idTovara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ComputersModelContainer" CdmEntityContainer="ComputersEntities5">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="ComputersModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SurName" ColumnName="SurName" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="E_mail" ColumnName="E-mail" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListSales">
+            <EntityTypeMapping TypeName="ComputersModel.ListSale">
+              <MappingFragment StoreEntitySet="ListSale">
+                <ScalarProperty Name="IdSale" ColumnName="IdSale" />
+                <ScalarProperty Name="datatime" ColumnName="datatime" />
+                <ScalarProperty Name="idTovara" ColumnName="idTovara" />
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Summa" ColumnName="Summa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ComputersModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="sum" ColumnName="sum" />
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="OperationId" ColumnName="OperationId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="WithdrawAmount" ColumnName="WithdrawAmount" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sklads">
+            <EntityTypeMapping TypeName="ComputersModel.Sklad">
+              <MappingFragment StoreEntitySet="Sklad">
+                <ScalarProperty Name="idTovara" ColumnName="idTovara" />
+                <ScalarProperty Name="nazvanie" ColumnName="nazvanie" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tovars">
+            <EntityTypeMapping TypeName="ComputersModel.Tovar">
+              <MappingFragment StoreEntitySet="Tovar">
+                <ScalarProperty Name="idTovara" ColumnName="idTovara" />
+                <ScalarProperty Name="proizvoditel" ColumnName="proizvoditel" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="opisanie" ColumnName="opisanie" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ComputersModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Oplatas">
+            <EntityTypeMapping TypeName="ComputersModel.Oplata">
+              <MappingFragment StoreEntitySet="Oplata">
+                <ScalarProperty Name="Schet" ColumnName="Schet" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Korzinas">
+            <EntityTypeMapping TypeName="ComputersModel.Korzina">
+              <MappingFragment StoreEntitySet="Korzina">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="opisanieT" ColumnName="opisanieT" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="nazvT" ColumnName="nazvT" />
+                <ScalarProperty Name="idTovara" ColumnName="idTovara" />
+                <ScalarProperty Name="IdKorz" ColumnName="IdKorz" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

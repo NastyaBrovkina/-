@@ -1,0 +1,55 @@
+﻿@model MvcApplication1.Models.Tovar
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены что хотите удалить этот товар из каталога?</h3>
+<fieldset>
+    <legend>Tovar</legend>
+
+    <div class="display-label">
+         Артикул
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idTovara)
+    </div>
+
+    <div class="display-label">
+         Наименование
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sklad.nazvanie)
+    </div>
+
+    <div class="display-label">
+         Производитель
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.proizvoditel)
+    </div>
+
+    <div class="display-label">
+        Цена
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.price)
+    </div>
+
+    <div class="display-label">
+        Описание
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.opisanie)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Удалить" /> |
+        @Html.ActionLink("Вернуться к каталогу товаров", "Index")
+    </p>
+}
