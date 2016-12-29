@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ComputersModelContainer" CdmEntityContainer="ComputersEntities">
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="ComputersModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SurName" ColumnName="SurName" />
+          <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="E_mail" ColumnName="E-mail" />
+          <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListSales">
+      <EntityTypeMapping TypeName="ComputersModel.ListSale">
+        <MappingFragment StoreEntitySet="ListSale">
+          <ScalarProperty Name="IdSale" ColumnName="IdSale" />
+          <ScalarProperty Name="datatime" ColumnName="datatime" />
+          <ScalarProperty Name="idTovara" ColumnName="idTovara" />
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Summa" ColumnName="Summa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="ComputersModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="Sender" ColumnName="Sender" />
+          <ScalarProperty Name="OperationId" ColumnName="OperationId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="WithdrawAmount" ColumnName="WithdrawAmount" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sklads">
+      <EntityTypeMapping TypeName="ComputersModel.Sklad">
+        <MappingFragment StoreEntitySet="Sklad">
+          <ScalarProperty Name="idTovara" ColumnName="idTovara" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="idSklad" ColumnName="idSklad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tovars">
+      <EntityTypeMapping TypeName="ComputersModel.Tovar">
+        <MappingFragment StoreEntitySet="Tovar">
+          <ScalarProperty Name="idTovara" ColumnName="idTovara" />
+          <ScalarProperty Name="nazvanie" ColumnName="nazvanie" />
+          <ScalarProperty Name="proizvoditel" ColumnName="proizvoditel" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="opisanie" ColumnName="opisanie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ComputersModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MvcApplication1.Models.Korzina>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Корзина</h2>
+
+<table>
+    <tr>
+        
+        <th>
+            Артикул товара
+        </th>
+        <th></th>
+        <th>
+            Наименование
+        </th>
+        <th></th>
+        <th>
+            Цена
+        </th>
+        <th></th>
+        <th>
+           
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.idTovara)
+        </td>
+        <td></td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sklad.nazvanie)
+        </td>
+        <td></td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td></td>
+        <td>
+            
+            @Html.ActionLink("Купить", "Buy", new { id = item.IdKorz })
+            @Html.ActionLink("Удалить", "Delete", new { id = item.IdKorz })
+        </td>
+    </tr>
+}
+
+</table>
+<p>
+  @Html.ActionLink("Продолжить просмотр товаров", "Index", "Home")
+</p>

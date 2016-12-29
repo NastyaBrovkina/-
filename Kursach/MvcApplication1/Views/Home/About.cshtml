@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Склад";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+@if (User.IsInRole("admin")) {
+@Html.ActionLink("Посмотреть количество товара на складе", "Index", "Sklad")
+}

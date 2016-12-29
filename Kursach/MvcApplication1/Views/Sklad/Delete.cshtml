@@ -1,0 +1,46 @@
+﻿@model MvcApplication1.Models.Sklad
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Списание товара</h2>
+
+<h3>Вы уверены что хотите списать товар?</h3>
+<fieldset>
+    <legend>Sklad</legend>
+
+    <div class="display-label">
+         Артикул
+    </div>
+    
+        <div class="display-field">
+
+            @Html.DisplayFor(model => model.idTovara)
+        </div>
+
+        <div class="display-label">
+            Наименование
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.nazvanie)
+        </div>
+
+        <div class="display-label">
+            Количество
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Count)
+        </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Списать" /> 
+        
+    </p>
+    <p>
+        @Html.ActionLink("Вернуться к списку", "Index")
+    </p>
+}

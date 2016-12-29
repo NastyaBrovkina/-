@@ -1,0 +1,52 @@
+﻿@model MvcApplication1.Models.Tovar
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Tovar</legend>
+
+    <div class="display-label">
+         Артикул
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idTovara)
+    </div>
+
+    <div class="display-label">
+         Наименование
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sklad.nazvanie)
+    </div>
+
+    <div class="display-label">
+        Производитель
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.proizvoditel)
+    </div>
+
+    <div class="display-label">
+         Цена
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.price)
+    </div>
+
+    <div class="display-label">
+         Описание
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.opisanie)
+    </div>
+</fieldset>
+<p>
+@if (User.IsInRole("admin")) {
+    @Html.ActionLink("Редактировать", "Edit", new { id=Model.id }) }
+    @Html.ActionLink("Вернуться к каталогу товаров", "Index")
+</p>

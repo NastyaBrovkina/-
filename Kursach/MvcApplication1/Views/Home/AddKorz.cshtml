@@ -1,0 +1,60 @@
+﻿@model MvcApplication1.Models.Tovar
+
+@{
+    ViewBag.Title = "AddKorz";
+}
+session_start();
+<h2>Добавить товар в корзину?</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idTovara)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idTovara)
+            @Html.ValidationMessageFor(model => model.idTovara)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.proizvoditel)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.proizvoditel)
+            @Html.ValidationMessageFor(model => model.proizvoditel)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.price)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.price)
+           @Html.ValidationMessageFor(model => model.price)
+        </div>
+
+        <div class="editor-label"  >
+            @Html.LabelFor(model => model.opisanie)
+        </div>
+        <div class="editor-field" >
+            @Html.EditorFor(model => model.opisanie)
+            @Html.ValidationMessageFor(model => model.opisanie)
+        </div>
+
+        <p>
+            <input type="submit" value="Добавить" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Вернуться к каталогу товаров", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
